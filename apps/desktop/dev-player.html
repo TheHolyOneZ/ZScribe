@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZScribe player (mock)</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background: #0e0f13;
+      }
+
+
+      #frame {
+        width: 560px;
+        height: 780px;
+        margin: 0 auto;
+        overflow: hidden;
+      }
+
+      #root {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="frame"><div id="root"></div></div>
+    <script type="module" src="/src/dev/mock.ts"></script>
+    <script type="module" src="/src/player.tsx"></script>
+  </body>
+</html>

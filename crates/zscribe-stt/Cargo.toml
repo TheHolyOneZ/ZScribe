@@ -1,0 +1,47 @@
+[package]
+name = "zscribe-stt"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "Local Whisper transcription and model management for ZScribe."
+
+[features]
+# On by default because the pre-flight scan exists to find a GPU, and a build
+# without this can never use one. whisper.cpp chooses its backend at compile
+# time, so this is a build decision, not a runtime one — it falls back to the
+# CPU by itself when no device initialises.
+#
+# Turn it off (`--no-default-features`) to build without the Vulkan SDK, or to
+# rule Vulkan out when diagnosing a driver problem.
+#
+# **macOS uses `metal`, not `vulkan`.** There is no Vulkan on a Mac without
+# installing MoltenVK, so a default build there would either fail to link or
+# quietly transcribe on the processor — on Apple Silicon that is the whole
+# reason the machine is fast. `scripts/run-tauri.mjs` selects it, because
+# Cargo cannot make a default feature depend on the target.
+default = ["vulkan"]
+vulkan = ["whisper-rs/vulkan"]
+metal = ["whisper-rs/metal"]
+
+[dependencies]
+zscribe-core.workspace = true
+zscribe-platform.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+ts-rs.workspace = true
+
+whisper-rs = { version = "0.16", default-features = false }
+zscribe-audio.workspace = true
+
+# Blocking HTTP with rustls, used once per model download and nowhere else.
+# reqwest would work too, but the download runs on its own thread and has no
+# use for an async runtime.
+ureq = { version = "2", default-features = false, features = ["tls", "gzip"] }
+sha2 = "0.10"
+
+[dev-dependencies]
+tempfile = "3"

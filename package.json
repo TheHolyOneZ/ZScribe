@@ -1,0 +1,26 @@
+{
+  "name": "zscribe",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ZScribe — records, transcribes and summarises, entirely on your own machine",
+  "scripts": {
+    "dev": "pnpm --filter @zscribe/desktop dev",
+    "build": "pnpm --filter @zscribe/desktop build",
+    "typecheck": "pnpm --filter @zscribe/desktop typecheck",
+    "test": "pnpm --filter @zscribe/desktop test",
+    "tauri": "node scripts/run-tauri.mjs",
+    "app:dev": "node scripts/run-tauri.mjs dev",
+    "app:build": "node scripts/run-tauri.mjs build",
+    "app:dev:cpu": "node scripts/run-tauri.mjs dev -- --no-default-features",
+    "app:build:cpu": "node scripts/run-tauri.mjs build -- --no-default-features",
+    "check:env": "node scripts/doctor.mjs",
+    "rs:test": "cargo test --workspace",
+    "rs:lint": "cargo clippy --workspace --all-targets -- -D warnings",
+    "rs:fmt": "cargo fmt --all"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.11.4"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "license": "GPL-3.0-or-later"
+}

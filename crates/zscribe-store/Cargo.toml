@@ -1,0 +1,33 @@
+[package]
+name = "zscribe-store"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "Settings, OS keychain secrets, and the SQLite recording store for ZScribe."
+
+[dependencies]
+zscribe-core.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+time.workspace = true
+tracing.workspace = true
+ts-rs.workspace = true
+uuid.workspace = true
+directories = "6"
+keyring = { version = "3", features = [
+  "apple-native",
+  "windows-native",
+  "sync-secret-service",
+] }
+# `bundled` compiles SQLite in, so there is no system libsqlite3 to depend on
+# when packaging for Windows or building an AppImage.
+rusqlite = { version = "0.32", features = ["bundled", "time"] }
+# Fallback secret storage for a Linux session with no Secret Service running.
+aes-gcm = "0.10"
+rand = "0.8"
+
+[dev-dependencies]
+tempfile = "3"

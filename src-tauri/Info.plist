@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Merged into the macOS app bundle by tauri-bundler.
+
+  NSMicrophoneUsageDescription is not optional and not cosmetic: macOS
+  terminates a process that touches the microphone without one, so without this
+  file ZScribe would install, open, and be killed the first time anybody
+  pressed record. The text is what the permission dialog shows, so it says what
+  the recording is for and where it goes — this is the one moment the privacy
+  claim is worth repeating.
+-->
+<plist version="1.0">
+  <dict>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>ZScribe records what you say so it can transcribe and summarise it on this Mac. Nothing is uploaded.</string>
+
+    <!-- The app is a recorder, so it has to keep running with its window
+         closed. Without this it is still a normal windowed app; it is here so
+         closing the last window never ends a recording. -->
+    <key>LSUIElement</key>
+    <false/>
+  </dict>
+</plist>

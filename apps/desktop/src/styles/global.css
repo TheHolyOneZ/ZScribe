@@ -1,0 +1,186 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "./tokens.css";
+@import "./markdown.css";
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+
+
+    background-color: transparent;
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    font-weight: 400;
+
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "cv05" 1, "cv11" 1, "ss01" 1;
+    font-variant-ligatures: contextual;
+
+
+    overflow: hidden;
+    user-select: none;
+    cursor: default;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+
+  .window-shell {
+    height: 100%;
+    background-color: var(--canvas);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+  }
+
+
+  .window-shell[data-maximized="true"] {
+    border-radius: 0;
+    border-color: transparent;
+  }
+
+
+  .recorder-shell {
+    background-image: linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--surface-raised) 92%, transparent),
+      var(--surface)
+    );
+  }
+
+  .recorder-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      color-mix(in oklab, var(--text) 14%, transparent),
+      transparent
+    );
+    pointer-events: none;
+  }
+
+
+  input,
+  textarea,
+  [data-selectable] {
+    user-select: text;
+    cursor: auto;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  figure {
+    margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: default;
+  }
+
+
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+    border-radius: var(--radius-sm);
+  }
+
+  ::selection {
+    background-color: var(--accent-subtle);
+    color: var(--text);
+  }
+
+
+  [data-numeric] {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+}
+
+@layer utilities {
+
+
+  .scroll-area {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+  }
+
+  .scroll-area::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .scroll-area::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scroll-area::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+    border: 3px solid transparent;
+    border-radius: 999px;
+    background-clip: content-box;
+  }
+
+  .scroll-area:hover::-webkit-scrollbar-thumb {
+    background-color: var(--border-strong);
+  }
+
+
+  .waveform {
+    mask-image: linear-gradient(to right, transparent, black 14%);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 14%);
+  }
+
+  .fade-top {
+    mask-image: linear-gradient(to bottom, transparent, black 1.5rem);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 1.5rem);
+  }
+
+
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

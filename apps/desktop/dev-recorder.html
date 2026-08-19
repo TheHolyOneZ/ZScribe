@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZScribe recorder (mock)</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+
+      body {
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(60rem 40rem at 20% 15%, #24304a 0%, transparent 60%),
+          radial-gradient(50rem 40rem at 85% 80%, #3a2440 0%, transparent 55%),
+          #14161c;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+      }
+
+      #frame {
+        width: 384px;
+        height: 104px;
+        overflow: hidden;
+      }
+
+      #root {
+        height: 100%;
+      }
+
+      #size-readout {
+        position: fixed;
+        bottom: 12px;
+        right: 14px;
+        font-size: 11px;
+        font-variant-numeric: tabular-nums;
+        color: #ffffff66;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="frame"><div id="root"></div></div>
+    <div id="size-readout">—</div>
+    <script type="module" src="/src/dev/mock.ts?recorder=1"></script>
+    <script type="module" src="/src/recorder.tsx"></script>
+  </body>
+</html>

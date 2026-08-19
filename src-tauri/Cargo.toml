@@ -1,0 +1,85 @@
+[package]
+name = "zscribe"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "ZScribe — records, transcribes and summarises, entirely on your own machine"
+default-run = "zscribe"
+
+[lib]
+name = "zscribe_lib"
+crate-type = ["lib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[features]
+# whisper.cpp picks its backend at compile time, so GPU support is a property
+# of the build rather than a setting. On by default — the pre-flight scan
+# exists to find a graphics card, and a build without this can never use one.
+#
+# `--no-default-features` builds without needing the Vulkan SDK, which is the
+# quickest way to get the app running on a new platform: transcription then
+# runs on the processor. It is also the first thing to try when a driver is
+# suspected.
+default = ["vulkan"]
+vulkan = ["zscribe-stt/vulkan"]
+
+# The same thing on a Mac, where Vulkan does not exist but Metal always does.
+metal = ["zscribe-stt/metal"]
+
+[dependencies]
+zscribe-core.workspace = true
+zscribe-platform.workspace = true
+zscribe-providers.workspace = true
+zscribe-store.workspace = true
+zscribe-audio.workspace = true
+# Default features off so this crate's own `vulkan` feature is what decides.
+zscribe-stt = { workspace = true, default-features = false }
+
+anyhow.workspace = true
+thiserror.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+tokio-util.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+tracing-appender = "0.2"
+time.workspace = true
+ts-rs.workspace = true
+uuid.workspace = true
+
+tauri = { version = "2", features = ["tray-icon", "image-png"] }
+tauri-plugin-opener = "2"
+tauri-plugin-global-shortcut = "2"
+tauri-plugin-notification = "2"
+# Registry Run key on Windows, an XDG .desktop entry on Linux, a LaunchAgent on
+# macOS.
+tauri-plugin-autostart = "2"
+# A second launch hands its arguments to the running instance instead of
+# starting a rival copy — which for a recorder would mean two processes
+# fighting over the microphone. Also the escape hatch on Wayland compositors
+# with no shortcuts portal: `zscribe record` from a native keybinding.
+tauri-plugin-single-instance = "2"
+tauri-plugin-window-state = "2"
+tauri-plugin-dialog = "2"
+
+# Playback serves the audio over loopback HTTP — see `media.rs` for why it
+# cannot be a custom URI scheme. All three are already in the tree via Tauri's
+# own dependencies; only the server features are new.
+hyper = { version = "1", features = ["server", "http1"] }
+hyper-util = { version = "0.1", features = ["tokio"] }
+http-body-util = "0.1"
+
+[target.'cfg(target_os = "linux")'.dependencies]
+# Called directly rather than through tauri-plugin-notification. On Linux the
+# plugin's `show()` spawns onto the Tokio runtime and then calls notify-rust,
+# which builds a runtime of its own — nested inside ours that is an
+# unconditional panic, and no caller can avoid it.
+notify-rust = { version = "4", default-features = false, features = ["d"] }
+
+[dev-dependencies]
+tempfile = "3"

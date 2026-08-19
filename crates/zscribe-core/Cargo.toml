@@ -1,0 +1,15 @@
+[package]
+name = "zscribe-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "Domain types for ZScribe — templates, transcripts, prompt building. No I/O."
+
+[dependencies]
+regex.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+ts-rs.workspace = true

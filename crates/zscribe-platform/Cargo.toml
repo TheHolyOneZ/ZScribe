@@ -1,0 +1,32 @@
+[package]
+name = "zscribe-platform"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "Hotkeys, session capabilities, and the hardware probe behind ZScribe's pre-flight scan."
+
+[dependencies]
+serde.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+ts-rs.workspace = true
+
+# CPU model, core count and physical memory, portably.
+sysinfo = { version = "0.33", default-features = false, features = ["system", "disk"] }
+
+[target.'cfg(not(target_os = "macos"))'.dependencies]
+# Enumerating Vulkan devices is the only way to learn a GPU's real name and its
+# device-local heap size — the number that decides which Whisper model fits.
+# Loading is fallible by design: no loader installed is a normal answer.
+#
+# Not on macOS: there is no Vulkan there without MoltenVK, and none is needed —
+# whisper.cpp is built against Metal, so `machine.rs` answers for it directly.
+ash = "0.38"
+
+[target.'cfg(target_os = "linux")'.dependencies]
+# The XDG desktop portal is the only way to register a global shortcut under a
+# Wayland compositor; the app is not allowed to grab keys for itself.
+ashpd = { version = "0.9", default-features = false, features = ["tokio"] }
+futures-util = "0.3"

@@ -1,0 +1,69 @@
+[workspace]
+members = ["src-tauri", "crates/*"]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+license = "GPL-3.0-or-later"
+authors = ["TheHolyOneZ"]
+repository = "https://github.com/TheHolyOneZ/ZScribe"
+
+[workspace.dependencies]
+zscribe-audio = { path = "crates/zscribe-audio" }
+zscribe-core = { path = "crates/zscribe-core" }
+zscribe-platform = { path = "crates/zscribe-platform" }
+zscribe-providers = { path = "crates/zscribe-providers" }
+zscribe-store = { path = "crates/zscribe-store" }
+# Default features off *here*, because a `default-features` set on the
+# individual dependency is silently ignored when the workspace declaration does
+# not set it — cargo warns, and the feature stays on. `src-tauri`'s own `vulkan`
+# feature is what turns it back on, so `--no-default-features` there really does
+# build without the Vulkan SDK.
+zscribe-stt = { path = "crates/zscribe-stt", default-features = false }
+
+anyhow = "1"
+thiserror = "2"
+# Used by the redactor, and already in the graph via tauri-utils.
+regex = { version = "1", default-features = false, features = ["std", "unicode-perl", "unicode-case"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "time"] }
+tokio-util = "0.7"
+async-trait = "0.1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+time = { version = "0.3", features = [
+  "formatting",
+  "parsing",
+  "macros",
+  "serde",
+  "local-offset",
+] }
+uuid = { version = "1", features = ["v4", "serde"] }
+ts-rs = "10"
+
+[profile.dev]
+# Full debuginfo across this dependency tree (webkit2gtk, gtk, whisper.cpp)
+# costs several gigabytes of build artifacts. Line tables keep panic backtraces
+# pointing at real source locations, which is what we actually use, at a
+# fraction of the size.
+debug = "line-tables-only"
+
+[profile.dev.package."*"]
+debug = false
+
+# whisper.cpp is unusably slow in a debug build — a minute of audio can take
+# longer to transcribe than it took to record. Optimising just this one
+# dependency keeps `pnpm app:dev` usable without a full release build.
+[profile.dev.package.whisper-rs-sys]
+opt-level = 3
+
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = true

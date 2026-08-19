@@ -1,0 +1,27 @@
+[package]
+name = "zscribe-audio"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "Microphone capture, resampling and WAV writing for ZScribe."
+
+[dependencies]
+serde.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+ts-rs.workspace = true
+
+cpal = "0.18"
+# WAV only. Whisper wants 16 kHz mono PCM and nothing else, so there is no
+# reason to pull in a general-purpose encoder.
+hound = "3.5"
+symphonia = { version = "0.6.1", features = ["all"] }
+
+# Telling voices apart needs a spectrum, and a spectrum needs an FFT. Pure
+# Rust, already in the tree, and the only maths dependency in the project.
+rustfft = "6"
+
+[dev-dependencies]
+tempfile = "3"
