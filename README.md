@@ -4,7 +4,7 @@
 
 <br/><br/>
 
-<a href="#build-it-yourself"><img src="https://img.shields.io/badge/Build_it_yourself-6366f1?style=for-the-badge&logoColor=white" alt="Build it yourself"></a> <a href="#the-feature-tour"><img src="https://img.shields.io/badge/Feature_tour-1b1d23?style=for-the-badge" alt="Feature tour"></a> <a href="#privacy-what-actually-leaves-your-machine"><img src="https://img.shields.io/badge/Privacy-1b1d23?style=for-the-badge" alt="Privacy"></a>
+<a href="https://zsync.eu/zscribe/"><img src="https://img.shields.io/badge/Download-6366f1?style=for-the-badge&logoColor=white" alt="Download ZScribe"></a> <a href="#build-it-yourself"><img src="https://img.shields.io/badge/Build_it_yourself-1b1d23?style=for-the-badge" alt="Build it yourself"></a> <a href="#the-feature-tour"><img src="https://img.shields.io/badge/Feature_tour-1b1d23?style=for-the-badge" alt="Feature tour"></a> <a href="#privacy-what-actually-leaves-your-machine"><img src="https://img.shields.io/badge/Privacy-1b1d23?style=for-the-badge" alt="Privacy"></a>
 
 <br/>
 
@@ -28,6 +28,7 @@
 ## Table of contents
 
 - [What ZScribe is](#what-zscribe-is)
+- [Download](#download)
 - [At a glance](#at-a-glance) · [Project status](#project-status)
 - [Why it exists](#why-it-exists)
 - [How it works, in four steps](#how-it-works-in-four-steps)
@@ -56,6 +57,20 @@ ZScribe is a **desktop recorder for conversations, calls, and thinking out loud.
 No bot joins your call. No account. No server. No telemetry. The only time ZScribe touches the network at all is to download a Whisper model, and — if you deliberately pick a cloud provider for summaries — to send it the finished *text* (never the audio).
 
 > **In one sentence:** it's what a Plaud Note or Otter would be if it lived entirely on your machine, cost nothing, and answered to no one but you.
+
+---
+
+## Download
+
+Prebuilt installers for Windows and Linux — **[zsync.eu/zscribe](https://zsync.eu/zscribe/)**
+
+| Platform | File |
+|---|---|
+| Windows | `ZScribe_0.1.0_x64-setup.exe` (installer) or `ZScribe_0.1.0_x64_en-US.msi` |
+| Linux | `ZScribe_0.1.0_amd64.AppImage` (portable) · `.deb` · `.rpm` |
+| macOS | Built from source — see [Build it yourself](#build-it-yourself) |
+
+Source code: **[github.com/TheHolyOneZ/ZScribe](https://github.com/TheHolyOneZ/ZScribe/)**
 
 ---
 
@@ -696,5 +711,7 @@ Bug reports and fixes are welcome — **macOS especially** could use real-world 
 
 <div align="center">
 <br/>
-<sub>Built by <b>TheHolyOneZ</b> · Records, transcribes, and summarises — entirely on your own machine.</sub>
+<sub>Built by <b><a href="https://github.com/TheHolyOneZ">TheHolyOneZ</a></b> · More projects at <a href="https://zsync.eu">zsync.eu</a> · Downloads at <a href="https://zsync.eu/zscribe/">zsync.eu/zscribe</a></sub>
+
+<sub>Records, transcribes, and summarises — entirely on your own machine.</sub>
 </div>
